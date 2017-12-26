@@ -19,6 +19,6 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(ModelItem modelItem) {
         image.setImageBitmap(BitmapFactory.decodeResource(itemView.getResources(), modelItem.getImgId()));
-        title.setText(modelItem.getName());
+        name.setText(modelItem.getName());
     }
 }
