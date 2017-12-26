@@ -1,6 +1,7 @@
 package tk.slaventij.recycleview_example;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,14 +18,25 @@ public class MainActivity extends Activity {
     private RecyclerAdapter adapter;
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(horizontalLinearLayoutManager);
+        } else if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerView.setLayoutManager(verticalLinearLayoutManager);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recycler);
 
-        verticalLinearLayoutManager = new LinearLayoutManager((this));
-        horizontalLinearLayoutManager = new LinearLayoutManager((this));
+        verticalLinearLayoutManager = new LinearLayoutManager(this);
+        horizontalLinearLayoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, false);
 
         recyclerView.setLayoutManager(verticalLinearLayoutManager);
 
@@ -33,6 +45,4 @@ public class MainActivity extends Activity {
         adapter.addAll(ModelItem.getFakeItems());
 
     }
-
-
 }
